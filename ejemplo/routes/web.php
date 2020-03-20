@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('Tareas/plantilla');
 });
 
+Route::get('/','TareaController@inicio')->name('inicio');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
