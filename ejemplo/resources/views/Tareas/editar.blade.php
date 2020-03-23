@@ -8,16 +8,15 @@
         </button>
       </div>
       <div >
-        <form action="{{ route('nueva.tarea')}}" method="POST" class="modal-body form-inline">
+        <form action="{{ route('editar.tarea')}}" method="POST" class="modal-body form-inline">
           @csrf
           <div>
           <input type="text" name="descripcion" placeholder="Descripción:" class="form-control card-body">
           </div>
-          <div>
-          	
+          <div>	
           <input name="lista" value="1" class="form-check-input" type="checkbox" id="" >
           </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="submit" class="btn btn-primary">Editar</button>
         </form>
       </div>
       <div class="modal-footer">

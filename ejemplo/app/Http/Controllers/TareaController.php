@@ -12,4 +12,8 @@ class TareaController extends Controller
     	$tarea = App\Lista_tareas::all();
     	return view('Tareas.plantilla',compact('tarea'));
     }
+
+    public function nuevaTarea(Request $request){
+    	
+    }
 }
