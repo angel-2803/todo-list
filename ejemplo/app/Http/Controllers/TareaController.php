@@ -27,7 +27,7 @@ class TareaController extends Controller
             }else{
              $notaUpdate->lista = 0;
             }
-            
+            $notaUpdate->tipo = $request->tipo;
             $notaUpdate->save();
             return redirect()->route('inicio')->with('info', 'Tarea modificada exitosamente');
     }

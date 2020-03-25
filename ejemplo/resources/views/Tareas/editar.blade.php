@@ -9,14 +9,22 @@
         </button>
       </div>
       <div >
-        <form action="{{ route('editar.tarea', $nota->id) }}" method="POST" >
+        <form action="{{ route('editar.tarea', $nota->id) }}" method="POST" class="modal-body " >
           @method('PUT')
           @csrf
           <div>
-          <input type="text" name="descripcion" value="{{ $nota->descripcion}}" placeholder="Descripción:" class="form-control card-body">
+          <input type="text" class="form-control card-body" name="descripcion" value="{{ $nota->descripcion}}" placeholder="Descripción:" >
           </div>
           <div> 
-          <input name="lista" value="1" class="form-check-input" type="checkbox" id="" >
+            Estado:
+          <input name="lista" value="1" class="" type="checkbox" id="" >
+          </div>
+          <div>
+            Tipo: <br>
+            <input type="radio" id="tipo" name="tipo" value="publica">
+            publica <br>
+            <input type="radio" id="tipo" name="tipo" value="privada">
+            privada<br>
           </div>
           <button type="submit" class="btn btn-primary">Editar</button>
         </form>

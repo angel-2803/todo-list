@@ -33,6 +33,7 @@
       <th scope="col">#</th>
       <th scope="col">Descripción</th>
       <th scope="col">Checado</th>
+      <th scope="col">tipo</th>
       <th scope="col">Accion</th>
     </tr>
   </thead>
@@ -47,6 +48,9 @@
         @else
         <input name="lista" value=""  class="form-check-input" type="checkbox" id="" disabled >
       @endif
+      </td>
+      <td>
+        {{$item->tipo}}
       </td>
 
       <td class="form-inline">
@@ -70,7 +74,14 @@
    </div>
 
    </div>
-
+          <div class="card-footer">
+            Bienvenido {{ auth()->user()->name }}
+            <a href="javascript: document.getElementById('logout').submit()" class="btn btn-danger btn-sm float-right">Cerrar sesión</a>
+            <form action="{{ route('logout') }}" id="logout" style="display:none" method="POST">
+              @csrf
+              
+            </form>
+          </div>
 
     <script src="{{asset('js/app.js')}}"></script>
     <!-- Optional JavaScript -->

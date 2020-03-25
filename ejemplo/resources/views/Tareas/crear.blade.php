@@ -8,14 +8,21 @@
         </button>
       </div>
       <div >
-        <form action="{{ route('nueva.tarea')}}" method="POST" class="modal-body form-inline">
+        <form action="{{ route('nueva.tarea')}}" method="POST" class="modal-body ">
           @csrf
           <div>
           <input type="text" name="descripcion" placeholder="Descripción:" class="form-control card-body">
           </div>
+          <div><br>
+          	<label>Estado:</label>
+            <input name="lista" value="1" class=" " type="checkbox" id="" >
+          </div>
           <div>
-          	
-          <input name="lista" value="1" class="form-check-input" type="checkbox" id="" >
+            Tipo <br>
+            <input type="radio" id="tipo" name="tipo" value="publica">
+            <label for="tipo">publica</label><br>
+            <input type="radio" id="tipo" name="tipo" value="privada">
+            <label for="tipo">privada</label><br>
           </div>
           <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
