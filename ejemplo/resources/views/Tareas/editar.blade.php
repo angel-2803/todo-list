@@ -1,19 +1,21 @@
-<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="editmodal-{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Crear Tarea</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Editar Tarea</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div >
-        <form action="{{ route('editar.tarea')}}" method="POST" class="modal-body form-inline">
+        <form action="{{ route('editar.tarea', $nota->id) }}" method="POST" >
+          @method('PUT')
           @csrf
           <div>
-          <input type="text" name="descripcion" placeholder="Descripción:" class="form-control card-body">
+          <input type="text" name="descripcion" value="{{ $nota->descripcion}}" placeholder="Descripción:" class="form-control card-body">
           </div>
-          <div>	
+          <div> 
           <input name="lista" value="1" class="form-check-input" type="checkbox" id="" >
           </div>
           <button type="submit" class="btn btn-primary">Editar</button>

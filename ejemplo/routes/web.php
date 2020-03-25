@@ -23,12 +23,16 @@ Route::get('principal', function () {
 Route::get('crear', function () {
     return view('Tareas/crear');
 });
+Route::get('editar', function () {
+    return view('Tareas/editar');
+});
 
 Route::get('principal','TareaController@inicio')->name('inicio');
 
 Route::post('tarea', function(Request $request){
 	$newtarea = new Lista_tareas;
     $newtarea->descripcion = $request->input('descripcion');
+     
      if($request->input('lista')){
      	$newtarea->lista = 1;
      }else{
@@ -45,18 +49,9 @@ Route::delete('eliminar/{id}', function($id){
 	return redirect()->route('inicio')->with('info', 'Tarea eliminada exitosamente');
 })->name('tarea.eliminada');
 
-Route::get('tarea/{id}/mod',function($id){
-	$una = Lista_tareas::findOrFail($id);
-	return view('inicio', compact('una'));
-})->name('tarea.edit');
+Route::get('editar/{id}','TareaController@editar')->name('Tareas.editar');
 
-Route::put('editar/{id}', function(Request $request, $id){
-	$tarea = Lista_tareas::findOrFail($id);
-	$tarea->descripcion= $request->input('descripcion');
-	$tarea->lista= $request->input('lista');
-	$tarea->save();
-	return redirect()->route('inicio')->with('info', 'Tarea Actualizada exitosamente');
-})->name('editar.tarea');
+Route::put('editar/{id}','TareaController@update')->name('editar.tarea');
 
 Auth::routes();
 
