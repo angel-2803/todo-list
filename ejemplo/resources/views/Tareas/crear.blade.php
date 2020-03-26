@@ -7,14 +7,17 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div >
+      <div>
         <form action="{{ route('nueva.tarea')}}" method="POST" class="modal-body ">
           @csrf
           <div>
-          <input type="text" name="descripcion" placeholder="Descripción:" class="form-control card-body">
+            <input type="text" name="tarea" placeholder="Tarea:" class="form-control card-body">
+          </div><br>
+          <div>
+            <input type="text" name="descripcion" placeholder="Descripción:" class="form-control card-body">
           </div>
           <div><br>
-          	<label>Estado:</label>
+            <label>Estado:</label>
             <input name="lista" value="1" class=" " type="checkbox" id="" >
           </div>
           <div>
@@ -24,12 +27,11 @@
             <input type="radio" id="tipo" name="tipo" value="privada">
             <label for="tipo">privada</label><br>
           </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        
       </div>
     </div>
   </div>

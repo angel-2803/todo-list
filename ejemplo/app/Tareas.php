@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lista_tareas extends Model
+class Tareas extends Model
 {
     //
 }

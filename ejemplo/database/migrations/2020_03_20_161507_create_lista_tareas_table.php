@@ -13,11 +13,14 @@ class CreateListaTareasTable extends Migration
      */
     public function up()
     {
-        Schema::create('lista_tareas', function (Blueprint $table) {
+        Schema::create('tareas', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->text('tarea');
             $table->text('descripcion');
             $table->boolean('lista');
+            $table->text('tipo');
+            
             $table->timestamps();
         });
     }

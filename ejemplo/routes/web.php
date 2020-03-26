@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Lista_tareas;
+use App\Tareas;
 
 Route::middleware('auth')->group(function(){
 
@@ -20,7 +20,8 @@ Route::get('editar', function () {
 Route::get('principal','TareaController@inicio')->name('inicio');
 
 Route::post('tarea', function(Request $request){
-	$newtarea = new Lista_tareas;
+	$newtarea = new Tareas;
+    $newtarea->tarea = $request->input('tarea');
     $newtarea->descripcion = $request->input('descripcion');
      
      if($request->input('lista')){
@@ -29,12 +30,13 @@ Route::post('tarea', function(Request $request){
      	$newtarea->lista = 0;
      }
     $newtarea->tipo = $request->input('tipo');
+    $newtarea->user_id = auth()->user()->id;
     	 $newtarea->save();
     	 return redirect()->route('inicio')->with('info', 'Tarea creada exitosamente');
 })->name('nueva.tarea');
 
 Route::delete('eliminar/{id}', function($id){
-	$tarea = Lista_tareas::findOrFail($id);
+	$tarea = Tareas::findOrFail($id);
 	$tarea->delete();
 	return redirect()->route('inicio')->with('info', 'Tarea eliminada exitosamente');
 })->name('tarea.eliminada');

@@ -26,7 +26,11 @@
               </div>
     @endif
      <h1>Tareas</h1>
-     <table class="table">
+     <div class="input-group">
+  
+  <input id="filtrar" type="text" class="form-control" placeholder="Ingresa la tarea que deseas Buscar...">
+</div><br>
+     <table class="table table-hover">
   <thead>
 
     <tr>
@@ -37,7 +41,7 @@
       <th scope="col">Accion</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="buscar">
     @foreach( $tareas as $item )
     <tr>
       <th scope="row" >{{$item->id}}</th>
@@ -89,5 +93,26 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+ 
+    (function ($) {
+ 
+        $('#filtrar').keyup(function () {
+ 
+             var rex = new RegExp($(this).val(), 'i');
+ 
+             $('.buscar tr').hide();
+ 
+             $('.buscar tr').filter(function () {
+               return rex.test($(this).text());
+             }).show();
+ 
+        })
+ 
+    }(jQuery));
+ 
+});
+    </script>
   </body>
 </html>
