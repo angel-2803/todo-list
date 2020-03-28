@@ -8,7 +8,9 @@
                 <div class="card-header">Administrar notas:</div>
 
                 <div class="card-body">
-                   
+
+                   <tareas/>
+
                 </div>
             </div>
         </div>
