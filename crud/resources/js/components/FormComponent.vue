@@ -27,7 +27,13 @@
         },
         methods: {
             nuevoPensamiento(){
-                alert(this.descripcion);
+                let pensamiento = {
+                    id: 2,
+                    descripcion: this.descripcion,
+                    fecha: '11/02/2019'
+                };
+                this.$emit('new', pensamiento);
+                this.descripcion = '';
             }
         }
     }

@@ -1970,14 +1970,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pensamiento'],
   //se enlaza con el componente PrincipalComponenet.vue
   data: function data() {
-    return {};
+    return {
+      modoEdicion: false
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    onClickDelete: function onClickDelete() {
+      this.$emit('delete');
+    },
+    onClickEdit: function onClickEdit() {
+      this.modoEdicion = true;
+    },
+    onClickUpdate: function onClickUpdate() {
+      this.modoEdicion = false;
+      this.$emit('update', pensamiento);
+    }
   }
 });
 
@@ -2020,7 +2038,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     nuevoPensamiento: function nuevoPensamiento() {
-      alert(this.descripcion);
+      var pensamiento = {
+        id: 2,
+        descripcion: this.descripcion,
+        fecha: '11/02/2019'
+      };
+      this.$emit('new', pensamiento);
+      this.descripcion = '';
     }
   }
 });
@@ -2054,18 +2078,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       pensamientos: [{
         'id': 1,
-        'descripcion': 'abc',
+        'descripcion': 'abcd',
         'fecha': '19-03-2010'
       }]
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  methods: {
+    addPensamiento: function addPensamiento(pensamiento) {
+      this.pensamientos.push(pensamiento);
+    },
+    deletePensamiento: function deletePensamiento(index) {
+      this.pensamientos.splice(index, 1);
+    },
+    editarPensamiento: function editarPensamiento(index, pensamiento) {
+      this.pensamientos[index] = pensamiento;
+    }
   }
 });
 
@@ -37789,24 +37830,70 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
-      _c("p", [_vm._v(_vm._s(_vm.pensamiento.descripcion))])
+      _vm.modoEdicion
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.pensamiento.descripcion,
+                expression: "pensamiento.descripcion"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.pensamiento.descripcion },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.pensamiento, "descripcion", $event.target.value)
+              }
+            }
+          })
+        : _c("p", [_vm._v(_vm._s(_vm.pensamiento.descripcion))])
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "card-footer" }, [
+      _vm.modoEdicion
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              on: { click: _vm.onClickUpdate }
+            },
+            [_vm._v("\n        Guardar Cambios")]
+          )
+        : _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.onClickEdit()
+                }
+              }
+            },
+            [_vm._v("Editar")]
+          ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          on: {
+            click: function($event) {
+              return _vm.onClickDelete()
+            }
+          }
+        },
+        [_vm._v("Eliminar")]
+      )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer" }, [
-      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Enviar")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger" }, [_vm._v("Eliminar")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37911,14 +37998,22 @@ var render = function() {
       "div",
       { staticClass: "col-md-8" },
       [
-        _c("form-component"),
+        _c("form-component", { on: { new: _vm.addPensamiento } }),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _vm._l(_vm.pensamientos, function(pensamiento) {
+        _vm._l(_vm.pensamientos, function(pensamiento, index) {
           return _c("example-component", {
             key: pensamiento.id,
-            attrs: { pensamiento: pensamiento }
+            attrs: { pensamiento: pensamiento },
+            on: {
+              update: function($event) {
+                return _vm.editarPensamiento(index)
+              },
+              delete: function($event) {
+                return _vm.deletePensamiento(index)
+              }
+            }
           })
         })
       ],

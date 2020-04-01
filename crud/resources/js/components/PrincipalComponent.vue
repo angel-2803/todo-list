@@ -2,12 +2,18 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             
-            <form-component></form-component>
+            <form-component 
+            @new="addPensamiento" 
+            ><!-- esto es un evento para agregar un nuevo Pensamiento -->
+                
+            </form-component>
             <br>
             <example-component 
-                v-for="pensamiento in pensamientos"
+                v-for="(pensamiento , index) in pensamientos"
                 :key="pensamiento.id"
-                :pensamiento="pensamiento"> <!-- se enlasa con el componente espesifico en ExampleComponent.vue -->
+                :pensamiento="pensamiento"
+                @update="editarPensamiento(index)"
+                @delete="deletePensamiento(index)"> <!-- se enlasa con el componente espesifico en ExampleComponent.vue -->
 
                 
             </example-component>
@@ -22,13 +28,24 @@
             return {
                 pensamientos: [{
                     'id': 1,
-                    'descripcion': 'abc',
+                    'descripcion': 'abcd',
                     'fecha': '19-03-2010'
                 }]
             }
         },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            addPensamiento(pensamiento){
+                this.pensamientos.push(pensamiento);
+            },
+            deletePensamiento(index){
+                this.pensamientos.splice(index, 1);
+            },
+            editarPensamiento(index, pensamiento){
+                this.pensamientos[index]= pensamiento;
+            }
         }
     }
 </script>
