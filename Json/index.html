@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Json</title>
+</head>
+<body>
+<h1 id="info"></h1>
+<ul id="fruta"></ul>
+<script>
+	// var jsonPersona= {
+	// 	"nombre": "Miguel",
+	// 	"Edad": 24
+	// };
+	// // console.log(jsonPersona);
+	// document.write(jsonPersona.nombre);
+	// var elemento = document.getElementById("info");
+	// 	elemento.innerHTML= jsonPersona.nombre;
+
+	// var fruta=[
+	// 	{"nombre": "manzana", "stock":20},
+	// 	{"nombre": "pera", "stock":2},
+	// 	{"nombre": "platano", "stock":9},
+	// 	{"nombre": "mango", "stock":19},
+	// 	{"nombre": "papa", "stock":1}  
+
+	// ];
+
+	// var salida = '';
+	// for (var i = 0; i < fruta.length; i++) {
+	// 	// salida += '<li>'+fruta[i].nombre+'-'+fruta[i].stock+'</li>';
+	// 	salida += `<li>${fruta[i].nombre} - ${fruta[i].stock}</li>`; //interpolacion concatenar todo con solo `` and ${}
+	// }
+	// document.getElementById('fruta').innerHTML = salida;
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var res = JSON.parse(xhttp.responseText);
+    // var res = xhttp.responseText;
+    var fruta = res.fruta;
+
+    var salida = '';
+	for (var i = 0; i < fruta.length; i++) {
+		// salida += '<li>'+fruta[i].nombre+'-'+fruta[i].stock+'</li>';
+		salida += `<li>${fruta[i].nombre} - ${fruta[i].stock}</li>`; //interpolacion concatenar todo con solo `` and ${}
+	}
+	document.getElementById('fruta').innerHTML = salida;
+  }
+};
+xhttp.open("GET", "fruta.json", true);
+xhttp.send();
+
+</script>
+</body>
+</html>

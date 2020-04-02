@@ -1,0 +1,10 @@
+{
+	"fruta":[
+		{"nombre": "manzana", "stock":20},
+		{"nombre": "pera", "stock":2},
+		{"nombre": "platano", "stock":9},
+		{"nombre": "mango", "stock":19},
+		{"nombre": "papa", "stock":1},
+		{"nombre": "maiz", "stock":100}
+	]
+}

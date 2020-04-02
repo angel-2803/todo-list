@@ -1987,14 +1987,27 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onClickDelete: function onClickDelete() {
-      this.$emit('delete');
+      var _this = this;
+
+      axios["delete"]("/pensamientos/".concat(this.pensamiento.id)).then(function () {
+        _this.$emit('delete');
+      });
     },
     onClickEdit: function onClickEdit() {
       this.modoEdicion = true;
     },
     onClickUpdate: function onClickUpdate() {
-      this.modoEdicion = false;
-      this.$emit('update', pensamiento);
+      var _this2 = this;
+
+      var params = {
+        descripcion: this.pensamiento.descripcion
+      };
+      axios.put("/pensamientos/".concat(this.pensamiento.id), params).then(function (response) {
+        _this2.modoEdicion = false;
+        var pensamiento = response.data;
+
+        _this2.$emit('update', pensamiento);
+      });
     }
   }
 });
@@ -2038,13 +2051,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     nuevoPensamiento: function nuevoPensamiento() {
-      var pensamiento = {
-        id: 2,
-        descripcion: this.descripcion,
-        fecha: '11/02/2019'
+      var _this = this;
+
+      var parametros = {
+        descripcion: this.descripcion
       };
-      this.$emit('new', pensamiento);
       this.descripcion = '';
+      axios.post('/pensamientos', parametros).then(function (response) {
+        var pensamiento = response.data;
+
+        _this.$emit('new', pensamiento);
+      }); // let pensamiento = {
+      //     id: 2,
+      //     descripcion: this.descripcion,
+      //     fecha: '11/02/2019'
+      // };
     }
   }
 });
@@ -2082,20 +2103,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      pensamientos: [{
-        'id': 1,
-        'descripcion': 'abcd',
-        'fecha': '19-03-2010'
-      }]
+      pensamientos: [] //arreglo vacio
+
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    var _this = this;
+
+    axios.get('/pensamientos').then(function (response) {
+      _this.pensamientos = response.data; //manda objetos con los datos de la BD
+
+      console.log(response.data);
+    });
   },
   methods: {
     addPensamiento: function addPensamiento(pensamiento) {
@@ -37824,9 +37846,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
+  return _c("div", { staticClass: "card panel-default" }, [
     _c("div", { staticClass: "card-header" }, [
-      _vm._v("Publicado en " + _vm._s(_vm.pensamiento.fecha))
+      _vm._v("Publicado en " + _vm._s(_vm.pensamiento.created_at))
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
@@ -37868,7 +37890,7 @@ var render = function() {
         : _c(
             "button",
             {
-              staticClass: "btn btn-success",
+              staticClass: "btn btn-default",
               on: {
                 click: function($event) {
                   return _vm.onClickEdit()
@@ -37996,7 +38018,7 @@ var render = function() {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c(
       "div",
-      { staticClass: "col-md-8" },
+      { staticClass: "col-md-8 " },
       [
         _c("form-component", { on: { new: _vm.addPensamiento } }),
         _vm._v(" "),
@@ -38008,7 +38030,13 @@ var render = function() {
             attrs: { pensamiento: pensamiento },
             on: {
               update: function($event) {
-                return _vm.editarPensamiento(index)
+                var i = arguments.length,
+                  argsArray = Array(i)
+                while (i--) argsArray[i] = arguments[i]
+                return _vm.editarPensamiento.apply(
+                  void 0,
+                  [index].concat(argsArray)
+                )
               },
               delete: function($event) {
                 return _vm.deletePensamiento(index)

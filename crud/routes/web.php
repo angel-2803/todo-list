@@ -20,4 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 Route::resource('/notas', 'NotaController')->middleware('auth');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::apiResource('/pensamientos','pensamientoController');

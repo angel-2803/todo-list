@@ -1,6 +1,6 @@
 <template>
-<div class="card">
-    <div class="card-header">Publicado en {{pensamiento.fecha}}</div>
+<div class="card panel-default">
+    <div class="card-header">Publicado en {{pensamiento.created_at}}</div>
 
     <div class="card-body">
         <input v-if="modoEdicion" type="text" class="form-control" v-model="pensamiento.descripcion">
@@ -10,7 +10,7 @@
     <div class="card-footer">
         <button v-if="modoEdicion" class="btn btn-success" v-on:click="onClickUpdate">
         Guardar Cambios</button>
-        <button v-else class="btn btn-success" v-on:click="onClickEdit()">Editar</button>
+        <button v-else class="btn btn-default" v-on:click="onClickEdit()">Editar</button>
         <button class="btn btn-danger" v-on:click="onClickDelete()">Eliminar</button>
     </div>  
 </div>
@@ -29,14 +29,23 @@
         },
         methods:{
             onClickDelete(){
-                this.$emit('delete');
+                axios.delete(`/pensamientos/${this.pensamiento.id}`).then(() => {
+                    this.$emit('delete');
+                });
+               
             },
             onClickEdit(){
                 this.modoEdicion = true;
             },
             onClickUpdate(){
-                this.modoEdicion = false;
-                this.$emit('update', pensamiento);
+                const params = {
+                    descripcion: this.pensamiento.descripcion
+                };
+                axios.put(`/pensamientos/${this.pensamiento.id}`, params).then((response) => {
+                    this.modoEdicion = false;
+                    const pensamiento = response.data;
+                    this.$emit('update', pensamiento);
+                });
             }
         }
     }

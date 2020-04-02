@@ -1,7 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            
+        <div class="col-md-8 ">
             <form-component 
             @new="addPensamiento" 
             ><!-- esto es un evento para agregar un nuevo Pensamiento -->
@@ -12,12 +11,11 @@
                 v-for="(pensamiento , index) in pensamientos"
                 :key="pensamiento.id"
                 :pensamiento="pensamiento"
-                @update="editarPensamiento(index)"
+                @update="editarPensamiento(index, ...arguments)"
                 @delete="deletePensamiento(index)"> <!-- se enlasa con el componente espesifico en ExampleComponent.vue -->
 
                 
             </example-component>
-
         </div>
     </div>
 </template>
@@ -26,15 +24,14 @@
     export default {
         data(){
             return {
-                pensamientos: [{
-                    'id': 1,
-                    'descripcion': 'abcd',
-                    'fecha': '19-03-2010'
-                }]
+                pensamientos: [] //arreglo vacio
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/pensamientos').then((response)=>{
+                    this.pensamientos = response.data; //manda objetos con los datos de la BD
+                    console.log(response.data);
+            });
         },
         methods: {
             addPensamiento(pensamiento){

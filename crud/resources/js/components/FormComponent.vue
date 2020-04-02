@@ -27,13 +27,25 @@
         },
         methods: {
             nuevoPensamiento(){
-                let pensamiento = {
-                    id: 2,
-                    descripcion: this.descripcion,
-                    fecha: '11/02/2019'
+                const parametros = {
+                    descripcion: this.descripcion
                 };
-                this.$emit('new', pensamiento);
+                
                 this.descripcion = '';
+
+                axios.post('/pensamientos', parametros)
+                .then((response)=> {
+                    const pensamiento = response.data;
+                    this.$emit('new', pensamiento);
+                    
+                });
+
+                // let pensamiento = {
+                //     id: 2,
+                //     descripcion: this.descripcion,
+                //     fecha: '11/02/2019'
+                // };
+                
             }
         }
     }
